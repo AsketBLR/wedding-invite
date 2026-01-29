@@ -328,21 +328,21 @@
       <p class="section-text" style="text-align:center;">
         Пожалуйста, дайте ответ до 1 июля 2026 года.
       </p>
-      <form class="rsvp-form">
-        <div>
-          <label for="name">Имя</label>
-          <input id="name" name="name" required>
-        </div>
-        <div>
-          <label for="guests">Количество гостей</label>
-          <input id="guests" name="guests" type="number" min="1">
-        </div>
-        <div>
-          <label for="comment">Комментарий (особые пожелания)</label>
-          <textarea id="comment" name="comment"></textarea>
-        </div>
-        <button type="submit">Отправить</button>
-      </form>
+      <form class="rsvp-form" id="rsvpForm">
+  <div>
+    <label for="name">Имя</label>
+    <input id="name" name="name" required>
+  </div>
+  <div>
+    <label for="guests">Количество гостей</label>
+    <input id="guests" name="guests" type="number" min="1">
+  </div>
+  <div>
+    <label for="comment">Комментарий (особые пожелания)</label>
+    <textarea id="comment" name="comment"></textarea>
+  </div>
+  <button type="submit">Отправить</button>
+</form>
     </section>
 
     <footer>
@@ -352,7 +352,51 @@
   </div>
 
   <script>
-    // сюда позже можно добавить отправку формы в Telegram
-  </script>
+  const BOT_TOKEN = '8540515653:AAEn0m4OTf2G5Nr7EctU88xxhzYT_eCs_J8';
+  const CHAT_ID   = '791429222';
+
+  const form   = document.getElementById('rsvpForm');
+  const status = document.getElementById('rsvpStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name    = document.getElementById('name').value.trim();
+    const guests  = document.getElementById('guests').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+
+    const text =
+      `💌 Новая заявка: ПОЛНЫЙ ДЕНЬ\n` +
+      `Источник: /index.html\n` +
+      `Имя: ${name}\n` +
+      `Гостей: ${guests || 'не указано'}\n` +
+      `Комментарий: ${comment || '—'}`;
+
+    status.textContent = 'Отправляем...';
+
+    try {
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: text
+        })
+      });
+
+      if (res.ok) {
+        status.textContent = 'Спасибо! Мы получили ваш ответ.';
+        form.reset();
+      } else {
+        status.textContent = 'Ошибка отправки, попробуйте ещё раз.';
+      }
+    } catch (err) {
+      status.textContent = 'Ошибка соединения, попробуйте ещё раз.';
+    }
+  });
+</script>
+
+
 </body>
 </html>
