@@ -205,39 +205,40 @@
   const form   = document.getElementById('rsvpForm');
   const status = document.getElementById('rsvpStatus');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // не даём странице перезагружаться
 
-    const firstName     = document.getElementById('first-name').value.trim();
-    const lastName      = document.getElementById('last-name').value.trim();
-    const phone         = document.getElementById('phone').value.trim();
-    const email         = document.getElementById('email').value.trim();
-    const attendance    = document.getElementById('attendance').value;
-    const guests        = document.getElementById('guests').value.trim();
-    const kids          = document.getElementById('kids').value.trim();
-    const transfer      = document.getElementById('transfer').value;
-    const accommodation = document.getElementById('accommodation').value;
-    const comment       = document.getElementById('comment').value.trim();
+      const firstName     = document.getElementById('first-name').value.trim();
+      const lastName      = document.getElementById('last-name').value.trim();
+      const phone         = document.getElementById('phone').value.trim();
+      const email         = document.getElementById('email').value.trim();
+      const attendance    = document.getElementById('attendance').value;
+      const guests        = document.getElementById('guests').value.trim();
+      const kids          = document.getElementById('kids').value.trim();
+      const transfer      = document.getElementById('transfer').value;
+      const accommodation = document.getElementById('accommodation').value;
+      const comment       = document.getElementById('comment').value.trim();
 
-    const attendanceText = {
-      yes: 'Да',
-      no: 'Нет',
-      maybe: 'Может быть'
-    }[attendance] || '—';
+      const attendanceText = {
+        yes: 'Да',
+        no: 'Нет',
+        maybe: 'Может быть'
+      }[attendance] || '—';
 
-    const transferText = {
-      yes: 'Да',
-      no: 'Нет',
-      maybe: 'Пока не уверены'
-    }[transfer] || '—';
+      const transferText = {
+        yes: 'Да',
+        no: 'Нет',
+        maybe: 'Пока не уверены'
+      }[transfer] || '—';
 
-    const accommodationText = {
-      yes: 'Да',
-      no: 'Нет',
-      maybe: 'Пока не уверены'
-    }[accommodation] || '—';
+      const accommodationText = {
+        yes: 'Да',
+        no: 'Нет',
+        maybe: 'Пока не уверены'
+      }[accommodation] || '—';
 
-    const text =
+      const text =
 `💌 Новая заявка: Свадьба
 Источник: /index.html
 
@@ -256,29 +257,30 @@ Email: ${email || 'не указан'}
 Комментарий:
 ${comment || '—'}`;
 
-    status.textContent = 'Отправляем...';
+      if (status) status.textContent = 'Отправляем...';
 
-    try {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: text
-        })
-      });
+      try {
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text
+          })
+        });
 
-      if (res.ok) {
-        status.textContent = 'Спасибо! Мы получили ваш ответ.';
-        form.reset();
-      } else {
-        status.textContent = 'Ошибка отправки, попробуйте ещё раз.';
+        if (res.ok) {
+          if (status) status.textContent = 'Спасибо! Мы получили ваш ответ.';
+          form.reset();
+        } else {
+          if (status) status.textContent = 'Ошибка отправки, попробуйте ещё раз.';
+        }
+      } catch (err) {
+        if (status) status.textContent = 'Ошибка соединения, попробуйте ещё раз.';
       }
-    } catch (err) {
-      status.textContent = 'Ошибка соединения, попробуйте ещё раз.';
-    }
-  });
+    });
+  }
 </script>
 
 
