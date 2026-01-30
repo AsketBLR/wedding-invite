@@ -155,6 +155,26 @@ h2 {
   font-size: 14px;
   border: 1px solid var(--border-soft);
 }
+.map-wrapper {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* адаптивный iframe под ширину блока */
+.map-wrapper iframe {
+  display: block;
+  width: 100%;
+  height: 260px; /* можно 220–280, как тебе по высоте */
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .map-wrapper iframe {
+    height: 220px;
+  }
+}
 
 /* TAGS / PALETTE (ДРЕСС-КОД) */
 
