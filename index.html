@@ -248,12 +248,83 @@
 
   </div>
 
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
  <script>
   const BOT_TOKEN = '8540515653:AAEn0m4OTf2G5Nr7EctU88xxhzYT_eCs_J8';
   const CHAT_ID   = '791429222';
 
   const form   = document.getElementById('rsvpForm');
   const status = document.getElementById('rsvpStatus');
+
+  // Confetti function
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiColors = ['#6B7C9E', '#8E9BB8', '#F5F3F8', '#E8E5F0', '#FFD700', '#FF69B4'];
+    const confettiPieces = [];
+    const confettiCount = 150;
+
+    class ConfettiPiece {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -10;
+        this.size = Math.random() * 8 + 4;
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = Math.random() * 2 - 1;
+        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 10 - 5;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > canvas.height) {
+          return false;
+        }
+        return true;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < confettiCount; i++) {
+      confettiPieces.push(new ConfettiPiece());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = confettiPieces.length - 1; i >= 0; i--) {
+        const piece = confettiPieces[i];
+        if (piece.update()) {
+          piece.draw();
+        } else {
+          confettiPieces.splice(i, 1);
+        }
+      }
+
+      if (confettiPieces.length > 0) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    animate();
+  }
 
   if (form) {
     form.addEventListener('submit', async (e) => {
@@ -322,6 +393,7 @@ ${comment || '—'}`;
 
         if (res.ok) {
           if (status) status.textContent = 'Спасибо! Мы получили ваш ответ.';
+          launchConfetti();
           form.reset();
         } else {
           if (status) status.textContent = 'Ошибка отправки, попробуйте ещё раз.';
