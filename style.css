@@ -84,6 +84,15 @@ body::before {
   animation: float 3s ease-in-out infinite;
 }
 
+.hero-info {
+ margin-top: 16px;
+ font-size: 14px;
+ color: var(--text);
+ opacity: 0.9;
+ line-height: 1.6;
+ letter-spacing: 0.5px;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
