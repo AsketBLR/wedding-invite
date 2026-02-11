@@ -573,8 +573,9 @@ label {
   font-size: 14px;
   display: block;
   margin-bottom: 4px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 input,
@@ -639,7 +640,8 @@ button:hover {
   text-align: center;
   margin-top: 12px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
+  font-weight: 500;
 }
 
 footer {
