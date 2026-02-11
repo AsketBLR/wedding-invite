@@ -442,3 +442,31 @@ footer {
     align-items: start;
   }
 }
+
+
+/* IMPORTANT INFORMATION SECTION */
+.info-list {
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+}
+
+.info-item {
+ padding: 16px 20px;
+ background: rgba(255, 255, 255, 0.05);
+ border-left: 3px solid var(--accent);
+ border-radius: 4px;
+ transition: all 0.3s ease;
+}
+
+.info-item:hover {
+ background: rgba(255, 255, 255, 0.1);
+ transform: translateX(4px);
+}
+
+.info-item p {
+ margin: 0;
+ font-size: 16px;
+ line-height: 1.6;
+ color: var(--text);
+}
