@@ -303,6 +303,42 @@ h2::after {
 .swatch.accent {background: var(--accent);}
 .swatch.acc2   {background: var(--accent2);}
 
+/* ORGANIZER */
+
+.organizer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.organizer-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(107, 124, 158, 0.3);
+}
+
+.organizer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.organizer-info {
+  text-align: center;
+}
+
+.organizer-phone {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
 /* FORM */
 
 .rsvp-form {
