@@ -240,9 +240,6 @@
 
   </div>
 
-  <!-- Confetti Canvas -->
-  <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
-
  <script>
   const BOT_TOKEN = '8540515653:AAEn0m4OTf2G5Nr7EctU88xxhzYT_eCs_J8';
   const CHAT_ID   = '791429222';
@@ -250,72 +247,72 @@
   const form   = document.getElementById('rsvpForm');
   const status = document.getElementById('rsvpStatus');
 
-  // Confetti function
-  function launchConfetti() {
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const confettiColors = ['#6B7C9E', '#8E9BB8', '#F5F3F8', '#E8E5F0', '#FFD700', '#FF69B4'];
-    const confettiPieces = [];
-    const confettiCount = 150;
-
-    class ConfettiPiece {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = -10;
-        this.size = Math.random() * 8 + 4;
-        this.speedY = Math.random() * 3 + 2;
-        this.speedX = Math.random() * 2 - 1;
-        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-        this.rotation = Math.random() * 360;
-        this.rotationSpeed = Math.random() * 10 - 5;
-      }
-
-      update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.rotation += this.rotationSpeed;
-
-        if (this.y > canvas.height) {
-          return false;
-        }
-        return true;
-      }
-
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.rotation * Math.PI) / 180);
-        ctx.fillStyle = this.color;
-        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-        ctx.restore();
-      }
+  // Универсальная функция
+  function celebrateSubmission() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    // Пробуем canvas-confetti, если доступен
+    if (typeof confetti !== 'undefined' && !isMobile) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#6B7C9E', '#8E9BB8', '#F5F3F8']
+      });
+    } else {
+      // Fallback для мобильных - звёздный взрыв
+      createStarBurst();
     }
+  }
 
-    for (let i = 0; i < confettiCount; i++) {
-      confettiPieces.push(new ConfettiPiece());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = confettiPieces.length - 1; i >= 0; i--) {
-        const piece = confettiPieces[i];
-        if (piece.update()) {
-          piece.draw();
+  function createStarBurst() {
+    const colors = ['#6B7C9E', '#8E9BB8', '#FFFFFF'];
+    const particleCount = 20; // оптимально для мобильных
+    
+    for (let i = 0; i < particleCount; i++) {
+      const star = document.createElement('div');
+      star.style.cssText = `
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        border-radius: 50%;
+        box-shadow: 0 0 8px 2px currentColor;
+        top: 50%;
+        left: 50%;
+        pointer-events: none;
+        z-index: 9999;
+      `;
+      
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const velocity = 80 + Math.random() * 60;
+      const x = Math.cos(angle) * velocity;
+      const y = Math.sin(angle) * velocity;
+      
+      document.body.appendChild(star);
+      
+      // Анимация через JS для лучшей совместимости
+      let opacity = 1;
+      let currentX = 0;
+      let currentY = 0;
+      
+      const animate = () => {
+        currentX += x / 30;
+        currentY += y / 30;
+        opacity -= 0.02;
+        
+        star.style.transform = `translate(${currentX}px, ${currentY}px) scale(${opacity})`;
+        star.style.opacity = opacity;
+        
+        if (opacity > 0) {
+          requestAnimationFrame(animate);
         } else {
-          confettiPieces.splice(i, 1);
+          star.remove();
         }
-      }
-
-      if (confettiPieces.length > 0) {
-        requestAnimationFrame(animate);
-      }
+      };
+      
+      requestAnimationFrame(animate);
     }
-
-    animate();
   }
 
   if (form) {
@@ -385,8 +382,10 @@ ${comment || '—'}`;
 
         if (res.ok) {
           if (status) status.textContent = 'Спасибо! Мы получили ваш ответ.';
-          launchConfetti();
           form.reset();
+          
+          // Вызываем празднование
+          setTimeout(celebrateSubmission, 200);
         } else {
           if (status) status.textContent = 'Ошибка отправки, попробуйте ещё раз.';
         }
