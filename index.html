@@ -17,6 +17,29 @@
       </div>
     </section>
 
+    <!-- COUNTDOWN -->
+    <section class="countdown-section">
+      <h2 class="countdown-title">ДО ВЕЛИКОГО ДНЯ</h2>
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <div class="countdown-value" id="days">0</div>
+          <div class="countdown-label">дней</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="hours">0</div>
+          <div class="countdown-label">часов</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="minutes">0</div>
+          <div class="countdown-label">минут</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="seconds">0</div>
+          <div class="countdown-label">секунд</div>
+        </div>
+      </div>
+    </section>
+
     <!-- О ДНЕ + КАРТИНКА -->
     <section class="section" id="about">
       <div class="grid-2">
@@ -246,6 +269,34 @@
 
   const form   = document.getElementById('rsvpForm');
   const status = document.getElementById('rsvpStatus');
+
+  // Countdown Timer
+  function updateCountdown() {
+    const wedding = new Date('2026-08-14T15:30:00');
+    const now = new Date();
+    const diff = wedding - now;
+
+    if (diff > 0) {
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    } else {
+      document.getElementById('days').textContent = '0';
+      document.getElementById('hours').textContent = '0';
+      document.getElementById('minutes').textContent = '0';
+      document.getElementById('seconds').textContent = '0';
+    }
+  }
+
+  // Обновляем каждую секунду
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
   // Универсальная функция
   function celebrateSubmission() {
