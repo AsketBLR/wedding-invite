@@ -6,6 +6,10 @@
   --accent2: #8E9BB8;
   --border-soft: #D5D2E0;
   --star-color: rgba(139, 149, 184, 0.4);
+  --blue-dark: #1E3A8A;      /* тёмно-синий */
+  --blue-light: #3B82F6;     /* ярко-голубой */
+  --green-cool: #10B981;     /* прохладный зелёный */
+  --green-sea: #059669;      /* морской зелёный */
 }
 
 * {
@@ -524,10 +528,11 @@ h2::after {
 }
 
 
-.swatch.bg     {background: var(--bg);}
-.swatch.bgsoft {background: var(--bg-soft);}
-.swatch.accent {background: var(--accent);}
-.swatch.acc2   {background: var(--accent2);}
+.swatch.blue-dark  { background: #1E3A8A; }
+.swatch.blue-light { background: #3B82F6; }
+.swatch.green-cool { background: #10B981; }
+.swatch.green-sea  { background: #059669; }
+
 
 /* ORGANIZER */
 
