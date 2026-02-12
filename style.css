@@ -719,3 +719,29 @@ footer {
   color: #fff;
   font-weight: 600;
 }
+
+.deadline {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+  color: #fff;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  text-shadow: none;
+  letter-spacing: 0.05em;
+  font-size: 15px;
+  animation: pulse-glow 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
+  }
+  50% { 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.3);
+  }
+}
+
