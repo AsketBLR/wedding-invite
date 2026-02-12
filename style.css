@@ -500,20 +500,29 @@ h2::after {
 
 .swatches {
   display: flex;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 16px;
   justify-content: center;
   position: relative;
   z-index: 1;
 }
 
 .swatch {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.swatch:hover {
+  transform: scale(1.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 6px 20px rgba(107, 124, 158, 0.6);
+}
+
 
 .swatch.bg     {background: var(--bg);}
 .swatch.bgsoft {background: var(--bg-soft);}
