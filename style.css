@@ -388,7 +388,7 @@ h2::after {
 }
 
 .day-photo:hover {
-  filter: grayscale(100%);
+  transform: scale(1.05);
 }
 
 /* PROGRAM */
@@ -719,4 +719,3 @@ footer {
   color: #fff;
   font-weight: 600;
 }
-
