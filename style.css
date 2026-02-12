@@ -79,7 +79,7 @@ body::before {
 }
 
 .hero::after {
-  content: '✨';
+  content: '';
   position: absolute;
   top: 20px;
   right: 30px;
@@ -142,7 +142,7 @@ body::before {
 }
 
 .countdown-section::after {
-  content: '✨';
+  content: '';
   position: absolute;
   top: 16px;
   right: 24px;
@@ -301,7 +301,7 @@ body::before {
 }
 
 .section::after {
-  content: '✨';
+  content: '';
   position: absolute;
   top: 16px;
   right: 24px;
@@ -315,7 +315,7 @@ body::before {
 }
 
 .section.soft::after {
-  content: '🌙';
+  content: '';;
 }
 
 .section + .section {
