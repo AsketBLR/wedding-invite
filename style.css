@@ -399,14 +399,15 @@ h2::after {
 /* PROGRAM */
 
 .program-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  justify-items: center;
   position: relative;
   z-index: 1;
 }
 
 .program-item {
+  width: 100%;
   text-align: center;
   font-size: 15px;
   position: relative;
