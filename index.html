@@ -375,9 +375,40 @@
     }
   }
 
+  function validateForm(formData) {
+  const requiredFields = ['first-name', 'last-name', 'phone', 'attendance'];
+  
+  for (let fieldId of requiredFields) {
+    const field = document.getElementById(fieldId);
+    if (!field.value.trim()) {
+      field.classList.add('error');
+      field.focus();
+      return false;
+    } else {
+      field.classList.remove('error');
+    }
+  }
+  
+  // Проверка телефона (минимум 10 цифр)
+  const phone = document.getElementById('phone').value.replace(/\D/g, '');
+  if (phone.length < 10) {
+    document.getElementById('phone').classList.add('error');
+    return false;
+  }
+  
+  return true;
+}
+
+
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+       if (!validateForm()) {
+      status.textContent = 'Пожалуйста, заполните все обязательные поля (*)';
+      status.style.color = '#ef4444';
+      return;
+    }
 
       const firstName     = document.getElementById('first-name').value.trim();
       const lastName      = document.getElementById('last-name').value.trim();
@@ -428,6 +459,7 @@ Email: ${email || 'не указан'}
 ${comment || '—'}`;
 
       if (status) status.textContent = 'Отправляем...';
+      status.style.color = '#fff';
 
       try {
         const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
