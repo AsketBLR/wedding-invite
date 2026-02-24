@@ -671,6 +671,19 @@ footer {
   color: rgba(255, 255, 255, 0.7);
 }
 
+input.error,
+select.error,
+textarea.error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+input.error::placeholder {
+  color: rgba(239, 68, 68, 0.7);
+}
+
+
 /* DESKTOP */
 
 @media (min-width: 768px) {
